@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>尚硅谷会员登录页面</title>
+		<title>Luntai.com Login Page</title>
 		<%@ include file="/pages/common/head.jsp" %>
 	</head>
 
@@ -15,31 +15,37 @@
 		<div class="login_banner">
 
 			<div id="l_content">
-				<span class="login_word">欢迎登录</span>
+				<span class="login_word">Welcome Login</span>
 			</div>
 
 			<div id="content">
 				<div class="login_form">
 					<div class="login_box">
 						<div class="tit">
-							<h1>尚硅谷会员</h1>
-							<a href="pages/user/regist.jsp">立即注册</a>
+							<h1>Luntai.com</h1>
+							<a href="pages/user/regist.jsp">Register Now</a>
 						</div>
 						<div class="msg_cont">
 							<b></b>
-							<span class="errorMsg">请输入用户名和密码</span>
+							<span class="errorMsg">
+								${empty requestScope.msg ? "Enter username and Password" : requestScope.msg}
+							</span>
 						</div>
+
 						<div class="form">
-							<form action="loginServlet" method="post">
-								<label>用户名称：</label>
-								<input class="itxt" type="text" placeholder="请输入用户名" autocomplete="off" tabindex="1" name="username" />
+							<form action="userServlet" method="post">
+								<%--add this hidden field to be part of URL parameter (http://ip:port/project/userServlet?action=login&....)--%>
+								<input type="hidden" name="action" value="login">
+
+								<label>Username: </label>
+								<input class="itxt" type="text" placeholder="Input Username" autocomplete="off" tabindex="1" name="username" value="${requestScope.username}"/>
 								<br />
 								<br />
-								<label>用户密码：</label>
-								<input class="itxt" type="password" placeholder="请输入密码" autocomplete="off" tabindex="1" name="password" />
+								<label>Password: </label>
+								<input class="itxt" type="password" placeholder="Input Password" autocomplete="off" tabindex="1" name="password" />
 								<br />
 								<br />
-								<input type="submit" value="登录" id="sub_btn" />
+								<input type="submit" value="Login" id="sub_btn" />
 							</form>
 						</div>
 

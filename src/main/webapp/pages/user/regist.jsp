@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>尚硅谷会员注册页面</title>
+		<title>Luntai.com Register Page</title>
 		<%@ include file="/pages/common/head.jsp" %>
 
 		<script type="text/javascript">
@@ -74,44 +74,47 @@
 		<div class="login_banner">
 
 			<div id="l_content">
-				<span class="login_word">欢迎注册</span>
+				<span class="login_word">Welcome Register</span>
 			</div>
 
 			<div id="content">
 				<div class="login_form">
 					<div class="login_box">
 						<div class="tit">
-							<h1>注册尚硅谷会员</h1>
-							<span class="errorMsg"></span>
+							<h1>Luntai.com</h1>
+							<span class="errorMsg">${requestScope.msg}</span>
 						</div>
 						<div class="form">
-							<form action="registerServlet" method="post">
-								<label>用户名称：</label>
-								<input class="itxt" type="text" placeholder="请输入用户名"
-									   autocomplete="off" tabindex="1" name="username" id="username" />
+							<form action="userServlet" method="post">
+								<%--add this hidden field to be part of URL parameter (http://ip:port/project/userServlet?action=register&....)--%>
+								<input type="hidden" name="action" value="register">
+
+								<label>Username: </label>
+								<input class="itxt" type="text" placeholder="Input Username"
+									   autocomplete="off" tabindex="1" name="username" id="username" value="${requestScope.username}" />
 								<br />
 								<br />
-								<label>用户密码：</label>
-								<input class="itxt" type="password" placeholder="请输入密码"
+								<label>Password: </label>
+								<input class="itxt" type="password" placeholder="Input password"
 									   autocomplete="off" tabindex="1" name="password" id="password" />
 								<br />
 								<br />
-								<label>确认密码：</label>
-								<input class="itxt" type="password" placeholder="确认密码"
+								<label>Confirm: </label>
+								<input class="itxt" type="password" placeholder="Confirm password"
 									   autocomplete="off" tabindex="1" name="repwd" id="repwd" />
 								<br />
 								<br />
-								<label>电子邮件：</label>
-								<input class="itxt" type="text" placeholder="请输入邮箱地址"
-									   autocomplete="off" tabindex="1" name="email" id="email" />
+								<label>Email: </label>
+								<input class="itxt" type="text" placeholder="Input email"
+									   autocomplete="off" tabindex="1" name="email" id="email" value="${requestScope.email}" />
 								<br />
 								<br />
-								<label>验证码：</label>
+								<label>QR code: </label>
 								<input class="itxt" type="text" style="width: 150px;" name="code" id="code"/>
 								<img alt="" src="static/img/code.bmp" style="float: right; margin-right: 40px">
 								<br />
 								<br />
-								<input type="submit" value="注册" id="sub_btn" />
+								<input type="submit" value="Register" id="sub_btn" />
 
 							</form>
 						</div>
