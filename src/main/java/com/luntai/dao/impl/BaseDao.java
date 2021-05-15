@@ -65,8 +65,8 @@ public abstract class BaseDao {
         BeanListHandler<T> tBeanListHandler = new BeanListHandler<>(type);
         try {
             return queryRunner.query(conn, sql, tBeanListHandler, args);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         } finally {
             JdbcUtils.close(conn);
         }

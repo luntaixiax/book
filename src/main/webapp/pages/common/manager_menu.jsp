@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div>
-    <a href="manager/bookServlet?action=list">图书管理</a>
-    <a href="pages/manager/order_manager.jsp">订单管理</a>
-    <a href="index.jsp">返回商城</a>
+    <a href="manager/bookServlet?action=list">Books</a> |
+    <a href="pages/manager/order_manager.jsp">Orders</a> |
+    <a href="index.jsp">Shopping</a>
 </div>

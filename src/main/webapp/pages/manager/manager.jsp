@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>后台管理</title>
+		<title>Backend Manager</title>
 		<%@ include file="/pages/common/head.jsp" %>
 
 		<style type="text/css">
@@ -18,12 +18,12 @@
 
 		<div id="header">
 			<img class="logo_img" alt="" src="static/img/logo.gif" >
-			<span class="wel_word">后台管理系统</span>
+			<span class="wel_word">Backend Manager</span>
 			<%@include file="/pages/common/manager_menu.jsp"%>
 		</div>
 
 		<div id="main">
-			<h1>欢迎管理员进入后台管理系统</h1>
+			<h1>Welcome to backend management page</h1>
 		</div>
 
 		<%@include file="/pages/common/footer.jsp"%>
