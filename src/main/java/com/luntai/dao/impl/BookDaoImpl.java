@@ -6,6 +6,7 @@ import com.luntai.pojo.Book;
 import java.util.List;
 
 public class BookDaoImpl extends BaseDao implements BookDao {
+
     @Override
     public int addBook(Book book) {
         String sql = "INSERT INTO t_book(`name`, `author`, `price`, `sales`, `stock`, `img_path`) VALUES (?,?,?,?,?,?)";
@@ -34,5 +35,18 @@ public class BookDaoImpl extends BaseDao implements BookDao {
     public List<Book> queryBooks() {
         String sql = "SELECT `id` , `name` , `author` , `price` , `sales` , `stock` , `img_path` imgPath FROM t_book";
         return queryForList(Book.class, sql);
+    }
+
+    @Override
+    public Integer queryForPageTotalCount() {
+        String sql = "SELECT count(*) FROM t_book";
+        Number count = (Number) queryForSingleValue(sql);
+        return count.intValue();
+    }
+
+    @Override
+    public List<Book> queryForPageItems(int begin, int pageSize) {
+        String sql = "SELECT `id` , `name` , `author` , `price` , `sales` , `stock` , `img_path` imgPath FROM t_book LIMIT ?, ?";
+        return queryForList(Book.class, sql, begin, pageSize);
     }
 }

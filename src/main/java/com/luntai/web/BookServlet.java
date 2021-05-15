@@ -1,6 +1,7 @@
 package com.luntai.web;
 
 import com.luntai.pojo.Book;
+import com.luntai.pojo.Page;
 import com.luntai.service.BookService;
 import com.luntai.service.impl.BookServiceImpl;
 import com.luntai.utils.WebUtils;
@@ -27,7 +28,8 @@ public class BookServlet extends BaseServlet {
 
         // step3: redirect user to book list page (separate call)
         // use redirect other than dispatch to prevent repetitive execution cause by front page refresh (each refresh will send new request)
-        String url = request.getContextPath() + "/manager/bookServlet?action=list";
+        int pageNo = WebUtils.parseInt(request.getParameter("pageNo"), 0) + 1; // add 1 to prevent page change
+        String url = request.getContextPath() + "/manager/bookServlet?action=page&pageNo=" + pageNo;
         response.sendRedirect(url);
     }
 
@@ -41,7 +43,8 @@ public class BookServlet extends BaseServlet {
 
         // step3: redirect user to book list page (separate call)
         // use redirect other than dispatch to prevent repetitive execution cause by front page refresh (each refresh will send new request)
-        String url = request.getContextPath() + "/manager/bookServlet?action=list";
+        int pageNo = WebUtils.parseInt(request.getParameter("pageNo"), 0);
+        String url = request.getContextPath() + "/manager/bookServlet?action=page&pageNo=" + pageNo;
         response.sendRedirect(url);
     }
 
@@ -54,7 +57,8 @@ public class BookServlet extends BaseServlet {
 
         // step3: redirect user to book list page (separate call)
         // use redirect other than dispatch to prevent repetitive execution cause by front page refresh (each refresh will send new request)
-        String url = request.getContextPath() + "/manager/bookServlet?action=list";
+        int pageNo = WebUtils.parseInt(request.getParameter("pageNo"), 0);
+        String url = request.getContextPath() + "/manager/bookServlet?action=page&pageNo=" + pageNo;
         response.sendRedirect(url);
     }
 
@@ -80,6 +84,22 @@ public class BookServlet extends BaseServlet {
         request.setAttribute("books", books);
 
         // step3: dispatch request to book_manager page (main page of book manager)
+        request.getRequestDispatcher("/pages/manager/book_manager.jsp").forward(request, response);
+    }
+
+    protected void page(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // step1: get request parameter (pageNo and pageSize)
+        int pageNo = WebUtils.parseInt(request.getParameter("pageNo"), 1);
+        int pageSize = WebUtils.parseInt(request.getParameter("pageSize"), Page.PAGE_SIZE);
+
+        // step2: call bookService to list book on pages
+        Page<Book> page = this.bookService.page(pageNo, pageSize);  // it will find the correspond page (at pagNo)
+        page.setUrl("manager/bookServlet?action=page"); // set url to the page object so that the frontend can render this to html action
+
+        // step3: save books to request for frontend to render
+        request.setAttribute("page", page);
+
+        // step4: dispatch request to book_manager page (main page of book manager)
         request.getRequestDispatcher("/pages/manager/book_manager.jsp").forward(request, response);
     }
 }

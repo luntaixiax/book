@@ -1,6 +1,7 @@
 package com.luntai.service;
 
 import com.luntai.pojo.Book;
+import com.luntai.pojo.Page;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface BookService {
     public Book queryBookById(Integer id);
 
     public List<Book> queryBooks();
+
+    public Page<Book> page(int pageNo, int pageSize);
 }
