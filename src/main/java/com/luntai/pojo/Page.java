@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Page<T> {
 
-    public static final Integer PAGE_SIZE = 2; // how many items(rows) to show per page
+    public static final Integer PAGE_SIZE = 4; // how many items(rows) to show per page
 
     private Integer pageNo;     // current page number
     private Integer pageTotal;  // total number of pages

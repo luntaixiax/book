@@ -19,7 +19,7 @@
                 return false;
             }
             else{
-                location.href = "${pageScope.basePath}manager/bookServlet?action=page&pageNo=" + pageNo;
+                location.href = "${pageScope.basePath}${requestScope.page.url}&pageNo=" + pageNo;
             }
         })
     });
