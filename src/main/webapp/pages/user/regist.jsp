@@ -8,6 +8,11 @@
 
 		<script type="text/javascript">
 			$(function(){
+				// click img to change validation code
+				$("#code_img").click(function (){
+					this.src = "${basePath}/kaptcha.jpg?d=" + new Date(); // add a new date to add randomness to prevent cache
+				});
+
 				$("#sub_btn").click(function (){
 					//Validate username
 					var usernameText = $("#username").val();
@@ -110,8 +115,8 @@
 								<br />
 								<br />
 								<label>QR code: </label>
-								<input class="itxt" type="text" style="width: 150px;" name="code" id="code"/>
-								<img alt="" src="static/img/code.bmp" style="float: right; margin-right: 40px">
+								<input class="itxt" type="text" style="width: 80px;" name="code" id="code"/>
+								<img id="code_img" alt="" src="kaptcha.jpg" style="float: right; margin-right: 40px; width: 110px; height: 30px">
 								<br />
 								<br />
 								<input type="submit" value="Register" id="sub_btn" />
