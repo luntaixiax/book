@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>我的订单</title>
+		<title>My Order</title>
 		<%@ include file="/pages/common/head.jsp" %>
 
 		<style type="text/css">
@@ -18,7 +18,7 @@
 
 		<div id="header">
 			<img class="logo_img" alt="" src="static/img/logo.gif" >
-			<span class="wel_word">我的订单</span>
+			<span class="wel_word">Orders</span>
 			<%@ include file="/pages/common/login_success_menu.jsp"%>
 		</div>
 
@@ -26,10 +26,10 @@
 
 			<table>
 				<tr>
-					<td>日期</td>
-					<td>金额</td>
-					<td>状态</td>
-					<td>详情</td>
+					<td>Date</td>
+					<td>Amount</td>
+					<td>Status</td>
+					<td>Info</td>
 				</tr>
 				<tr>
 					<td>2015.04.23</td>

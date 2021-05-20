@@ -75,7 +75,7 @@
 					<span class="cart_span">Items in cart:<span class="b_count">${sessionScope.cart.totalCount}</span></span>
 					<span class="cart_span">Subtotal $<span class="b_price">${sessionScope.cart.totalPrice}</span></span>
 					<span class="cart_span"><a id = "clearCart" href="cartServlet?action=clear">Clear</a></span>
-					<span class="cart_span"><a href="pages/cart/checkout.jsp">Checkout</a></span>
+					<span class="cart_span"><a href="orderServlet?action=createOrder">Checkout</a></span>
 				</div>
 			</c:if>
 
