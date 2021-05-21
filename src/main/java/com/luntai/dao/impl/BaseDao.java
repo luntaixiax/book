@@ -25,10 +25,8 @@ public abstract class BaseDao {
             return queryRunner.update(conn, sql, args);
         } catch (SQLException throwable) {
             throwable.printStackTrace();
-        } finally {
-            JdbcUtils.close(conn);
+            throw new RuntimeException(throwable); // to let other db operation know this error to rollback
         }
-        return -1;
     }
 
     /**
@@ -46,10 +44,8 @@ public abstract class BaseDao {
             return queryRunner.query(conn, sql, tBeanHandler, args);
         } catch (SQLException throwable) {
             throwable.printStackTrace();
-        } finally {
-            JdbcUtils.close(conn);
+            throw new RuntimeException(throwable); // to let other db operation know this error to rollback
         }
-        return null;
     }
 
     /**
@@ -67,10 +63,8 @@ public abstract class BaseDao {
             return queryRunner.query(conn, sql, tBeanListHandler, args);
         } catch (SQLException throwable) {
             throwable.printStackTrace();
-        } finally {
-            JdbcUtils.close(conn);
+            throw new RuntimeException(throwable); // to let other db operation know this error to rollback
         }
-        return null;
     }
 
     /**
@@ -86,10 +80,8 @@ public abstract class BaseDao {
             return queryRunner.query(conn, sql, scalarHandler, args);
         } catch (SQLException throwable) {
             throwable.printStackTrace();
-        } finally {
-            JdbcUtils.close(conn);
+            throw new RuntimeException(throwable); // to let other db operation know this error to rollback
         }
-        return null;
     }
 
 }

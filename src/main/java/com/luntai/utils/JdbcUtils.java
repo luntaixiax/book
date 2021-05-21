@@ -10,6 +10,7 @@ import java.util.Properties;
 
 public class JdbcUtils {
     private static DruidDataSource dataPool;
+    private static ThreadLocal<Connection> connThread = new ThreadLocal<>();
 
     static {
         // connection pool initialization, static method
@@ -33,13 +34,56 @@ public class JdbcUtils {
     }
 
     public static Connection getConnection(){
-        Connection conn = null;
-        try {
-            conn = dataPool.getConnection();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
+        Connection conn = connThread.get();
+        if (conn == null) {
+            try {
+                conn = dataPool.getConnection();
+                connThread.set(conn); // save to threadLocal to share this conn
+                // database affair management
+                conn.setAutoCommit(false);
+            } catch (SQLException throwable) {
+                throwable.printStackTrace();
+            }
         }
         return conn;
+    }
+
+    public static void commitAndClose() {
+        Connection conn = connThread.get();
+        if (conn != null) {
+            // means conn has been used before
+            try {
+                conn.commit();
+            } catch (SQLException throwable) {
+                throwable.printStackTrace();
+            } finally {
+                try {
+                    conn.close();
+                } catch (SQLException throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+        }
+        connThread.remove();  // prevent Tomcat error, because Tomcat has thread pool
+    }
+
+    public static void rollbackAndCLose() {
+        Connection conn = connThread.get();
+        if (conn != null) {
+            // means conn has been used before
+            try {
+                conn.rollback();
+            } catch (SQLException throwable) {
+                throwable.printStackTrace();
+            } finally {
+                try {
+                    conn.close();
+                } catch (SQLException throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+        }
+        connThread.remove();  // prevent Tomcat error, because Tomcat has thread pool
     }
 
     public static void close(Connection conn) {

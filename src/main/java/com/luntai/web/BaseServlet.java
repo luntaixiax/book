@@ -37,6 +37,7 @@ public class BaseServlet extends HttpServlet {
             method.invoke(this, request, response);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
+            throw new RuntimeException(e); // throw error to caller
         }
     }
 }
