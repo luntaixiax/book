@@ -1,6 +1,7 @@
 package com.luntai.web;
 
 import com.google.code.kaptcha.Constants;
+import com.google.gson.Gson;
 import com.luntai.pojo.User;
 import com.luntai.service.UserService;
 import com.luntai.service.impl.UserServiceImpl;
@@ -11,6 +12,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @WebServlet(name = "UserServlet", value = "/userServlet")
@@ -92,5 +94,21 @@ public class UserServlet extends BaseServlet {
         request.getSession().invalidate();
         // step2. redirect user to main page (context path)
         response.sendRedirect(request.getContextPath());
+    }
+
+    protected void ajaxExistsUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // get request param
+        String username = request.getParameter("username");
+        // see if username exists
+        boolean exitsUsername = this.userService.exitsUsername(username);
+        // encapsulate into Map
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("existsUsername", exitsUsername);
+        // convert to json string
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(resultMap);
+        // return json
+        response.getWriter().write(jsonStr);
+
     }
 }

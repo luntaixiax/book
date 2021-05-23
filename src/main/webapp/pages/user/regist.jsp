@@ -8,6 +8,28 @@
 
 		<script type="text/javascript">
 			$(function(){
+
+				// validate user
+				$("#username").blur(function () {
+					//  get username from form
+					var username = this.value;
+					// send Ajax request
+					$.getJSON(
+							"${basePath}userServlet",	// url
+							"action=ajaxExistsUsername&username=" + username, // request data
+							function (data) {
+								// data is from server response json
+								if (data.existsUsername) {
+									$("span.errorMsg").text("Username Exists!");
+								} else {
+									$("span.errorMsg").text("Username Available~");
+								}
+							}
+					);
+
+
+				});
+
 				// click img to change validation code
 				$("#code_img").click(function (){
 					this.src = "${basePath}/kaptcha.jpg?d=" + new Date(); // add a new date to add randomness to prevent cache

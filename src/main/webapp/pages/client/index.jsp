@@ -18,7 +18,17 @@
         $(function () {
             $("button.addToCart").click(function () {
                 var bookId = $(this).attr("bookId"); // this refers to <button class="addToCart" bookId="xxx"> tag
-                location.href = "${basePath}cartServlet?action=addItem&id=" + bookId;
+                <%-- location.href = "${basePath}cartServlet?action=addItem&id=" + bookId;--%>
+
+                $.getJSON(
+                    "${basePath}cartServlet",   // url
+                    "action=ajaxAddItem&id=" + bookId,  // request data
+                    function (data) {
+                        $(".cartTotalCount").text("There are " + data.totalCount + "items in your cart");
+                        $(".cartLastName").text(data.lastName);  // from server json
+                    }
+                )
+
             });
         })
     </script>
@@ -58,15 +68,16 @@
         <div style="text-align: center">
 
             <c:if test="${empty sessionScope.cart.items}">
+                <span class="cartTotalCount"></span>
                 <div>
-                    <span style="color: red">Nothing in your cart</span>
+                    <span class="cartLastName" style="color: red">Nothing in your cart</span>
                 </div>
             </c:if>
 
             <c:if test="${not empty sessionScope.cart.items}">
-                <span>There are ${sessionScope.cart.totalCount} items in your cart</span>
+                <span class="cartTotalCount">There are ${sessionScope.cart.totalCount} items in your cart</span>
                 <div>
-                    You just added <span style="color: red">${sessionScope.lastName}</span> to the cart
+                    You just added <span class="cartLastName" style="color: red">${sessionScope.lastName}</span> to the cart
                 </div>
             </c:if>
 
