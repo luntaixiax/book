@@ -2,11 +2,10 @@ package com.luntai.pojo;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Order {
     private String orderId;
-    private Date createTime;
+    private LocalDateTime createTime;
     private BigDecimal price;
     private Integer status = 0; // 0-pending 1-shipped 2-delivered
     private Integer userId;
@@ -14,7 +13,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(String orderId, Date createTime, BigDecimal price, Integer status, Integer userId) {
+    public Order(String orderId, LocalDateTime createTime, BigDecimal price, Integer status, Integer userId) {
         this.orderId = orderId;
         this.createTime = createTime;
         this.price = price;
@@ -30,11 +29,11 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 

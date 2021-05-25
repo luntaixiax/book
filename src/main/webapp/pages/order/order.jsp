@@ -31,26 +31,30 @@
 					<td>Status</td>
 					<td>Info</td>
 				</tr>
-				<tr>
-					<td>2015.04.23</td>
-					<td>90.00</td>
-					<td>未发货</td>
-					<td><a href="#">查看详情</a></td>
-				</tr>
 
-				<tr>
-					<td>2015.04.20</td>
-					<td>20.00</td>
-					<td>已发货</td>
-					<td><a href="#">查看详情</a></td>
-				</tr>
+				<c:forEach items="${requestScope.myOrders}" var="order">
+					<c:choose>
+						<c:when test="${order.status == 0}">
+							<c:set var="stat" value="Pending"/>
+						</c:when>
+						<c:when test="${order.status == 1}">
+							<c:set var="stat" value="Shipped"/>
+						</c:when>
+						<c:when test="${order.status == 2}">
+							<c:set var="stat" value="Delivered"/>
+						</c:when>
+						<c:otherwise>
+							<c:set var="stat" value="Unknown"/>
+						</c:otherwise>
+					</c:choose>
 
-				<tr>
-					<td>2014.01.23</td>
-					<td>190.00</td>
-					<td>已完成</td>
-					<td><a href="#">查看详情</a></td>
-				</tr>
+					<tr>
+						<td>${order.createTime}</td>
+						<td>${order.price}</td>
+						<td>${stat}</td>
+						<td><a href="#">Details</a></td>
+					</tr>
+				</c:forEach>
 			</table>
 
 		</div>

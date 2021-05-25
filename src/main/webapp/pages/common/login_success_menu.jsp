@@ -9,7 +9,7 @@
 
 <div>
     <span>Welcome<span class="um_span">${sessionScope.user.username}</span>BookStore</span>
-    <a href="pages/order/order.jsp">Orders</a>
+    <a href="orderServlet?action=showMyOrders">Orders</a>
     <a href="userServlet?action=logout">Logout</a>&nbsp;&nbsp;
     <a href="index.jsp">MainPage</a>
 </div>

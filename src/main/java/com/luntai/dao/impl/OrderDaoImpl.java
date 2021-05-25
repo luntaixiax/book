@@ -13,8 +13,20 @@ public class OrderDaoImpl extends BaseDao implements OrderDao {
     }
 
     @Override
-    public List<Order> queryOrdersByUserId(String userId) {
-        String sql = "SELECT `order_id` AS orderId, `create_time` AS createTime, `price`, `status`, `user_id` AS userId FROM t_order WHERE `user_id` = ?";
+    public List<Order> queryOrdersByUserId(Integer userId) {
+        String sql = "SELECT `order_id` AS orderId, `create_time` AS createTime, `price`, `status`, `user_id` AS userId FROM t_order WHERE `user_id` = ? ORDER BY createTime DESC";
         return queryForList(Order.class, sql, userId);
+    }
+
+    @Override
+    public List<Order> queryOrders() {
+        String sql = "SELECT `order_id` AS orderId, `create_time` AS createTime, `price`, `status`, `user_id` AS userId FROM t_order ORDER BY createTime DESC";
+        return queryForList(Order.class, sql);
+    }
+
+    @Override
+    public int changeOrderStatus(String orderId, Integer status) {
+        String sql = "UPDATE t_order SET `status` = ? WHERE `order_id` = ?";
+        return update(sql, status, orderId);
     }
 }

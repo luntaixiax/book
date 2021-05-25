@@ -9,7 +9,8 @@ import com.luntai.dao.impl.OrderItemDaoImpl;
 import com.luntai.pojo.*;
 import com.luntai.service.OrderService;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 public class OrderServiceImpl implements OrderService {
@@ -20,7 +21,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public String createOrder(Cart cart, Integer userId) {
         String orderId = System.currentTimeMillis() + "" + userId; // timestamp+userId to ensure unique orderId
-        Order order = new Order(orderId, new Date(), cart.getTotalPrice(), 0, userId);
+        Order order = new Order(orderId, LocalDateTime.now(), cart.getTotalPrice(), 0, userId);
         this.orderDao.saveOrder(order); // save order to database
 
         // will also save items in the order(cart) into database
@@ -42,5 +43,30 @@ public class OrderServiceImpl implements OrderService {
         cart.clear();
 
         return orderId;
+    }
+
+    @Override
+    public List<Order> showAllOrders() {
+        return this.orderDao.queryOrders();
+    }
+
+    @Override
+    public List<Order> showMyOrders(Integer userId) {
+        return this.orderDao.queryOrdersByUserId(userId);
+    }
+
+    @Override
+    public void sendOrder(String orderId) {
+        this.orderDao.changeOrderStatus(orderId, 1); // 1 means shipped
+    }
+
+    @Override
+    public void receiveOrder(String orderId) {
+        this.orderDao.changeOrderStatus(orderId, 2); // 2 means delivered (received)
+    }
+
+    @Override
+    public List<OrderItem> showOrderDetail(String orderId) {
+        return this.orderItemDao.queryOrderItemsByOrderId(orderId);
     }
 }

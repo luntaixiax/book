@@ -8,9 +8,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OrderDaoImplTest {
 
+    public OrderDao orderDao = new OrderDaoImpl();
+
     @Test
     void queryOrdersByUserId() {
-        OrderDao orderDao = new OrderDaoImpl();
-        System.out.println(orderDao.queryOrdersByUserId("4"));
+        System.out.println(orderDao.queryOrdersByUserId(1));
+    }
+
+    @Test
+    void changeOrderStatus() {
+        orderDao.changeOrderStatus("16215458794821", 2);
     }
 }

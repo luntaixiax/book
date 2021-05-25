@@ -8,6 +8,10 @@ public interface OrderDao {
 
     public int saveOrder(Order order);
 
-    public List<Order> queryOrdersByUserId(String userId);
+    public List<Order> queryOrdersByUserId(Integer userId);
+
+    public List<Order> queryOrders();
+
+    public int changeOrderStatus(String orderId, Integer status);
 
 }

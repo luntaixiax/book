@@ -5,7 +5,7 @@ import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(filterName = "ManagerFilter", value = {"/pages/manager/*", "/manager/bookServlet"})
+@WebFilter(filterName = "ManagerFilter", value = {"/pages/manager/*", "/manager/bookServlet", "/orderServlet"})
 public class ManagerFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
     }
