@@ -46,13 +46,13 @@
         </c:if>
         <c:if test="${not empty sessionScope.user}">
             <span>Welcome<span class="um_span">${sessionScope.user.username}</span>BookStore</span>
-            <a href="pages/order/order.jsp">Orders</a>
+            <a href="orderServlet?action=showMyOrdersPage">Orders</a>
             <a href="userServlet?action=logout">Logout</a>
         </c:if>
 
-
         <a href="pages/cart/cart.jsp">Cart</a>
         <a href="pages/manager/manager.jsp">Manage</a>
+
     </div>
 </div>
 <div id="main">

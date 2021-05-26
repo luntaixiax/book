@@ -19,6 +19,10 @@
 			input {
 				text-align: center;
 			}
+
+			div.middle {
+				text-align: center;
+			}
 		</style>
 	</head>
 
@@ -30,7 +34,7 @@
 		</div>
 		
 		<div id="main">
-			<form action="manager/bookServlet" method="get">
+			<form action="manager/bookServlet" method="post">
 
 				<input type="hidden" name="pageNo" value="${param.pageNo}">
 				<input type="hidden" name="action" value="${param.method}">
@@ -51,9 +55,10 @@
 						<td><input name="author" type="text" value="${requestScope.book.author}"/></td>
 						<td><input name="sales" type="text" value="${requestScope.book.sales}"/></td>
 						<td><input name="stock" type="text" value="${requestScope.book.stock}"/></td>
-						<td><input type="submit" value="Submit"/></td>
+
 					</tr>	
 				</table>
+				<div class="middle"><input type="submit" value="Submit"/></div>
 			</form>
 			
 	

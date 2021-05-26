@@ -9,6 +9,6 @@
 
 <div>
     <a href="manager/bookServlet?action=page">Books</a> |
-    <a href="orderServlet?action=showAllOrders">Orders</a> |
+    <a href="orderServlet?action=showAllOrdersPage">Orders</a> |
     <a href="index.jsp">Shopping</a>
 </div>

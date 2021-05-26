@@ -18,19 +18,21 @@
 			<table>
 				<tr>
 					<td>Date</td>
+					<td>User</td>
 					<td>Price</td>
 					<td>Status</td>
 					<td>Action</td>
 
 				</tr>
 
-				<c:forEach items="${requestScope.allOrders}" var="order">
+				<c:forEach items="${requestScope.page.items}" var="order">
 					<tr>
 						<td>${order.createTime}</td>
+						<td>${order.userId}</td>
 						<td>${order.price}</td>
-						<td><a href="#">Details</a></td>
+						<td><a href="orderServlet?action=showOrderDetail&orderId=${order.orderId}&pageNo=${requestScope.page.pageNo}">Details</a></td>
 						<c:if test="${order.status == 0}">
-							<td><a href="#">Dispatch</a></td>
+							<td><a href="orderServlet?action=sendOrder&orderId=${order.orderId}">Dispatch</a></td>
 						</c:if>
 						<c:if test="${order.status == 1}">
 							<td>Shipped</td>
@@ -42,8 +44,11 @@
 					</tr>
 				</c:forEach>
 
-
 			</table>
+
+			<%--static include page navigator--%>
+			<%@include file="/pages/common/page_nav.jsp"%>
+
 		</div>
 
 		<%@include file="/pages/common/footer.jsp"%>

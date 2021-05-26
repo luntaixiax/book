@@ -7,7 +7,7 @@
 		<%@ include file="/pages/common/head.jsp" %>
 
 		<style type="text/css">
-			h1 {
+			h1, h2 {
 				text-align: center;
 				margin-top: 200px;
 			}
@@ -25,7 +25,9 @@
 		</div>
 		
 		<div id="main">
-		
+			<c:if test="${requestScope.isManager eq false}">
+				<h2>Permission Denied, only manager can enter this page!</h2>
+			</c:if>
 			<h1>Welcome Back <a href="index.jsp">Return to MainPage</a></h1>
 	
 		</div>

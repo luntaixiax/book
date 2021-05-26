@@ -46,13 +46,76 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order getOrderByOrderId(String orderId) {
+        return this.orderDao.queryOrderByOrderId(orderId);
+    }
+
+    @Override
     public List<Order> showAllOrders() {
         return this.orderDao.queryOrders();
     }
 
     @Override
+    public Page<Order> showAllOrdersPage(int pageNo, int pageSize) {
+        // return a page object
+
+        // create a page object
+        Page<Order> page = new Page<>();
+        page.setPageSize(pageSize);
+
+        // find total records
+        Integer pageTotalCount = this.orderDao.queryOrdersPageTotalCount();
+        // find total number of pages
+        Integer pageTotal = pageTotalCount % pageSize > 0 ? pageTotalCount / pageSize + 1 : pageTotalCount / pageSize;
+
+        // !!! must set pageTotal before setPageNo, because in Page.setPageNo(), it will check if current pageNo is greater than pageTotal
+        page.setPageTotal(pageTotal);
+        page.setPageNo(pageNo);
+
+        // find begin index
+        int begin = Math.max((page.getPageNo() - 1), 0) * pageSize;  // use .getPageNo() to prevent pageNo overflow (will cap to pageTotal)
+        // get items on current page
+        List<Order> items = this.orderDao.queryOrdersPageItems(begin, pageSize);
+
+        // save attributes to page object
+        page.setPageTotalCount(pageTotalCount);
+        page.setItems(items);
+
+        return page;
+    }
+
+    @Override
     public List<Order> showMyOrders(Integer userId) {
         return this.orderDao.queryOrdersByUserId(userId);
+    }
+
+    @Override
+    public Page<Order> showMyOrdersPage(Integer userId, int pageNo, int pageSize) {
+        // return a page object
+
+        // create a page object
+        Page<Order> page = new Page<>();
+        page.setPageSize(pageSize);
+
+        // find total records
+        Integer pageTotalCount = this.orderDao.queryOrdersByUserIdPageTotalCount(userId);
+        // find total number of pages
+        Integer pageTotal = pageTotalCount % pageSize > 0 ? pageTotalCount / pageSize + 1 : pageTotalCount / pageSize;
+
+        // !!! must set pageTotal before setPageNo, because in Page.setPageNo(), it will check if current pageNo is greater than pageTotal
+        page.setPageTotal(pageTotal);
+        page.setPageNo(pageNo);
+
+        // find begin index
+        int begin = Math.max((page.getPageNo() - 1), 0) * pageSize;  // use .getPageNo() to prevent pageNo overflow (will cap to pageTotal)
+        // get items on current page
+        List<Order> items = this.orderDao.queryOrdersByUserIdPageItems(userId, begin, pageSize);
+
+        // save attributes to page object
+        page.setPageTotalCount(pageTotalCount);
+        page.setItems(items);
+
+        return page;
     }
 
     @Override

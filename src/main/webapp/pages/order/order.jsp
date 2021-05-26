@@ -29,10 +29,10 @@
 					<td>Date</td>
 					<td>Amount</td>
 					<td>Status</td>
-					<td>Info</td>
+					<td colspan="2">Action</td>
 				</tr>
 
-				<c:forEach items="${requestScope.myOrders}" var="order">
+				<c:forEach items="${requestScope.page.items}" var="order">
 					<c:choose>
 						<c:when test="${order.status == 0}">
 							<c:set var="stat" value="Pending"/>
@@ -52,10 +52,20 @@
 						<td>${order.createTime}</td>
 						<td>${order.price}</td>
 						<td>${stat}</td>
-						<td><a href="#">Details</a></td>
+						<td><a href="orderServlet?action=showOrderDetail&orderId=${order.orderId}&pageNo=${requestScope.page.pageNo}">Details</a></td>
+						<c:if test="${order.status eq 1}">
+							<td><a href="orderServlet?action=receiveOrder&orderId=${order.orderId}">Confirm</a></td>
+						</c:if>
+						<c:if test="${order.status ne 1}">
+							<td></td>
+						</c:if>
+
 					</tr>
 				</c:forEach>
 			</table>
+
+			<%--static include page navigator--%>
+			<%@include file="/pages/common/page_nav.jsp"%>
 
 		</div>
 

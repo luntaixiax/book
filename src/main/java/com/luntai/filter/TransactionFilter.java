@@ -6,7 +6,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebFilter(filterName = "TransactionFilter", value = "/*")
+@WebFilter(filterName = "TransactionFilter")
 public class TransactionFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
     }
