@@ -55,6 +55,7 @@
 						<td><input name="author" type="text" value="${requestScope.book.author}"/></td>
 						<td><input name="sales" type="text" value="${requestScope.book.sales}"/></td>
 						<td><input name="stock" type="text" value="${requestScope.book.stock}"/></td>
+<%--						<td>Upload Img<input type="file" name="myFile"></td><br>--%>
 
 					</tr>	
 				</table>

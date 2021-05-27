@@ -1,11 +1,16 @@
 package com.luntai.web;
 
+import com.luntai.utils.WebUtils;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
 
 //@WebServlet(name = "BaseServlet", value = "/BaseServlet")
 public class BaseServlet extends HttpServlet {
@@ -27,7 +32,15 @@ public class BaseServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action"); // get <action> method from GET request URL
+        String action = null;
+        if(ServletFileUpload.isMultipartContent(request)) {
+            // if it is multipart form request, cannot use getParameter()
+            Map<String, List<String>> map = WebUtils.fileRequestParamMap(request);
+            action = map.get("action").get(0);
+        } else{
+            // else it is a normal request
+            action = request.getParameter("action"); // get <action> method from GET request URL
+        }
 
         // use reflection to automatically find desired method to execute
         try {

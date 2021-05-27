@@ -1,8 +1,18 @@
 package com.luntai.utils;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WebUtils {
@@ -38,6 +48,45 @@ public class WebUtils {
             // e.printStackTrace();
         }
         return defaultValue;
+    }
+
+    public static Map<String, List<String>> fileRequestParamMap(HttpServletRequest request) {
+        if(ServletFileUpload.isMultipartContent(request)){
+            FileItemFactory factory = new DiskFileItemFactory();
+            ServletFileUpload upload = new ServletFileUpload(factory);
+            Map<String, List<String>> map = new HashMap<>();
+
+            try {
+
+                List<FileItem> list = upload.parseRequest(request);
+
+                for (FileItem fileItem : list) {
+                    if (fileItem.isFormField()) {
+                        String fieldName = fileItem.getFieldName();
+                        String fieldValue = fileItem.getString("UTF-8");
+                        if (map.containsKey(fieldName)) {
+                            map.get(fieldName).add(fieldValue);
+                        }
+                        else {
+                            List<String> values = new ArrayList<>();
+                            values.add(fieldValue);
+                            map.put(fieldName, values);
+
+                        }
+                    }
+                    else {
+                        System.out.println("Filename: " + fileItem.getName());
+                    }
+                }
+
+                return map;
+
+            } catch (FileUploadException | UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+
     }
 
 
